@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Hockey</title>
+
+    <style>
+        body{
+            background-color: rgb(37, 4, 37);
+            font: "Arial";
+        }
+        #tabs{
+            margin:0px;
+            padding: 0px;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #49114e;
+            position: relative;
+            align-self: center;
+            height: 50px;
+            border-radius: 10px;
+
+        }
+        #tabs button{
+            background-color: inherit;
+            color: #e1e8eb;
+            font: "Arial";
+            height : 50px;
+            align-self: center;
+            float: center;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 20px;
+        }
+        #tabs button:hover{
+            background-color: rgb(117, 15, 95);
+        }
+
+        #tabs button.active{
+            background-color: rgb(172, 39, 161);
+        }
+        #Home{
+            position:absolute;
+            left:30%;
+        }
+        #HowtoPlay{
+            position:absolute;
+            left:38%;
+        }
+        #Settings{
+            position:absolute;
+            left:50%;
+        }
+        #Aboutus{
+            position:absolute;
+            left:60%;
+        }
+        #Home_content{
+            margin-top: 20px;
+            margin-left:5px;
+            background-image: url("airhockeyhome.jpg");
+            background-size:contain;
+            background-repeat: no-repeat;
+
+        }
+        #Play{
+            position:absolute;
+            border:2px solid maroon;
+            top:45%;
+            right:7%;
+            height: 10%;
+            width:20%;
+            border-radius: 20px;
+            font-size: 200%;
+            font-weight: bolder;
+            background-color: rgb(245, 82, 196);
+            -webkit-text-fill-color: maroon;
+            filter: drop-shadow(10px 10px 10px rgb(20, 4, 4));
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #Play:hover{
+            background-color:rgb(235, 110, 197); 
+            transform: scale(1.1,1.1);
+        }
+        #HowtoPlay_content{
+            background-color: rgb(37, 4, 37);
+            
+        }
+        #Snippet{
+            width: 40%;
+            height: auto;
+            position: absolute;
+            left: 5%;
+            top: 30%;
+        }
+
+        #Instructions{
+            position: absolute;
+            top: 20%;
+            right: 10%;
+            max-width:40%;
+            color:#ccc;
+            -webkit-text-fill-color: white;
+            font-size: 30px;
+        }
+
+        #Aboutus_content{
+            position: absolute;
+            font: "Arial";
+            top: 12%;
+            left: 5%;
+            max-width: 90%;
+            color:#ccc;
+            -webkit-text-fill-color: white;
+            font-size: 25px;
+            
+        }
+        #Settings_content{
+            position: absolute;
+            font: "Arial";
+            top: 12%;
+            left: 5%;
+            max-width: 90%;
+            color:#ccc;
+            -webkit-text-fill-color: white;
+            font-size: 25px;
+        }
+        #Arena_content{
+            -webkit-text-fill-color: black;
+            position:absolute;
+            top: 32px;
+            left: 120px;
+        }
+        
+        #arena{
+            position:absolute;
+            border:2px solid maroon;
+            padding:10%;
+            border-radius: 10px;
+            font-size: 100%;
+            font-weight: bolder;
+            background-color: rgb(245, 82, 196);
+            -webkit-text-fill-color: maroon;
+            filter: drop-shadow(10px 10px 10px rgb(20, 4, 4));
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #arena:hover{
+            background-color:rgb(235, 110, 197); 
+            transform: scale(1.1,1.1);
+        }
+       
+        
+    </style>
+    
+    
+    <script>
+        
+        function openTab(event,TabName) {
+        // Declare all variables
+        var i, content, tabbutton;
+
+        // Get all elements with class="content" and hide them
+        content = document.getElementsByClassName("content");
+        for (i = 0; i < content.length; i++) {
+            content[i].style.display = "none";
+        }
+
+        // Get all elements with class="tabbutton" and remove the class "active"
+        tabbutton = document.getElementsByClassName("tabbutton");
+        for (i = 0; i < tabbutton.length; i++) {
+            tabbutton[i].className = tabbutton[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(TabName).style.display = "block";
+        event.currentTarget.className += " active";
+        }
+    </script>
+</head>
+
+<body>
+    <div id="tabs">
+        <button class="tabbutton" id="Home" onclick="openTab(event,'Home_content')">Home</button>
+        <button class="tabbutton" id="HowtoPlay" onclick="openTab(event,'HowtoPlay_content')">How to play</button>
+        <button class="tabbutton" id="Settings" onclick="openTab(event,'Settings_content')">Settings</button>
+        <button class="tabbutton" id="Aboutus" onclick="openTab(event,'Aboutus_content')">About us</button>
+    </div>
+    
+    <div class="content" id="Home_content">
+        <a href="play.html"><button id="Play" onclick="">PLAY</button></a>
+
+
+
+        
+    </div>
+    <div class="content" id="HowtoPlay_content">
+        <img id="Snippet" src="Snippet.jpg" >
+        <div id="Instructions">
+            <p> Score the required number of goals by striking the puck into the opponent's goal
+            </p>
+            <p>
+                Move the paddle by pointing the cursor in the direction you want to move
+            </p>
+            <p>
+                You cannot cross the half line with your paddle 
+            </p>
+            <p>
+                Make sure to not score an own goal :)    
+            </p>
+
+
+        </div>
+
+    </div>
+    <div class="content" id="Settings_content">
+        <h3>Arena</h3>
+        <div id="Arena_content">
+          <select id="arena" onchange="selectNum()"> 
+            <option value="space">Space</option>
+            <option value="footballfield">Football</option>
+            <option value="classic">Classic</option>
+            
+          </select>
+        </div>
+
+        <div id="Image_preview">
+            <img id="preview" height="100%" width="100%">
+        </div>
+            <script>
+                document.getElementById("Image_preview").style.height=window.innerHeight*0.4+"px";
+                document.getElementById("Image_preview").style.width=window.innerWidth*0.3+"px";
+            </script>
+            <script>
+                var strUser="space";
+                localStorage.arena=strUser;
+                function selectNum(){
+                        strUser = document.getElementById("arena").value;
+                        
+                        localStorage.arena=strUser;
+                        console.log(localStorage.arena)
+                        document.getElementById("preview").src=strUser+".jpg";
+                    }
+                document.getElementById("preview").src=strUser+".jpg";
+                
+            </script>
+        
+
+    </div>
+    <div class="content" id="Aboutus_content">
+        <h2>About the game</h2>
+        <p>
+            Air Hockey is a popular arcade game (perhaps the favourite of a lot of us). We have tried to translate the flavour of this game into the virtual world. 
+        </p>
+        <p>
+            This game was developed as a part of the GameDev Hackathon 2022 organised by Devcom, a division of WnCC(Web and Coding Club) at IIT Bombay.
+        </p>
+        <p>
+            The programming languages used here are HTML5, CSS and Javascript. W3Schools and StackOverflow have been very useful resources in the development process. 
+        </p>
+        <h2>About the Developers</h2>
+        <p>
+            This game was created by Soham Joshi, first year undergraduate at the Computer Science Department and Shubhranil Chatterjee, first year undergraduate at the Mechanical Engineering Department at IIT Bombay.
+        </p>
+
+
+    </div>
+
+    <script> document.getElementById("Home").click(); //click on Home by default
+    document.getElementById("Home_content").style.height=window.innerHeight-100+"px";</script>
+</body>
+</html>

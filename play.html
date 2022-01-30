@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Hockey</title>
+
+    <style>
+        #canvas{
+            position:fixed;
+            left:0;
+            top:0;
+            height:100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size:cover;
+            border:5px solid rgb(31, 6, 46);
+            /*background-color:#ec38ce   */     
+        }
+        #play{
+            position:absolute;
+            size:50px;
+            cursor: pointer;
+            font-size: 40px;
+            border-radius: 10px;
+            color:white;
+            background-color:black;
+            border:4px solid white;
+            transition:0.3s;
+        }
+       #play:hover{
+           
+        transform: scale(1.1,1.1);
+
+       }
+    </style>
+    
+    
+</head>
+<body>
+    
+    
+
+    <canvas id="canvas">
+        
+    </canvas>
+    <script>
+        document.getElementById("canvas").width=window.innerWidth;
+        document.getElementById("canvas").height=window.innerHeight;
+        document.getElementById("canvas").style.backgroundImage='url("'+localStorage.arena+'.jpg")'
+    </script>
+    <button id="play" onclick="loadscript()">Start Game</button>
+    
+    <script>
+        document.getElementById("play").style.top=window.innerHeight*0.45+"px";
+        document.getElementById("play").style.left=window.innerWidth*0.40+"px";
+        
+        function loadscript(){
+
+            document.getElementById("play").style.display="none";
+            var head = document.getElementsByTagName("head")[0];
+            var script = document.createElement("script");
+            script.src="gamebody.js";
+            head.appendChild(script);
+        }
+    </script>
+</body>
+</html>
