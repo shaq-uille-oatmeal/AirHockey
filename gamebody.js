@@ -307,7 +307,8 @@ function endgame(){     //called when max goals are reached
     if (window.event.key=="Enter")
         game();
     if (window.event.key=="Escape") {
-        window.location.assign("index.html");}
+        window.location.assign("https://shaq-uille-oatmeal.github.io/AirHockey/");
+    }
     
 }
 
