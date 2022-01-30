@@ -307,7 +307,7 @@ function endgame(){     //called when max goals are reached
     if (window.event.key=="Enter")
         game();
     if (window.event.key=="Escape") {
-        window.location.assign("home.html");}
+        window.location.assign("index.html");}
     
 }
 
