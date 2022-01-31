@@ -314,7 +314,7 @@ function animate(){     //animation loop
                 ct.fillText(score.left+" : "+score.right,canvas_dim.x/2-15,canvas_dim.y*0.4);
                 ct.fillText("Congrats!!! You have WON !",canvas_dim.x/2,canvas_dim.y*0.5);
                 ct.fillText("Press enter to play again",canvas_dim.x/2,canvas_dim.y*0.6);
-                ct.fillText("Press esc to return to menu",canvas_dim.x/2,canvas_dim.y*0.7);
+                ct.fillText("Press Backspace to return to menu",canvas_dim.x/2,canvas_dim.y*0.7);
             }
 
             else if(score.right==max_score){
@@ -322,7 +322,7 @@ function animate(){     //animation loop
                 ct.fillText(score.left+" : "+score.right,canvas_dim.x/2-15,canvas_dim.y*0.4);
                 ct.fillText("Better luck next time!",canvas_dim.x/2,canvas_dim.y*0.5);
                 ct.fillText("Press enter to play again",canvas_dim.x/2,canvas_dim.y*0.6);
-                ct.fillText("Press esc to return to menu",canvas_dim.x/2,canvas_dim.y*0.7);
+                ct.fillText("Press Backspace to return to menu",canvas_dim.x/2,canvas_dim.y*0.7);
             }
 
             window.addEventListener("keydown",endgame);
@@ -348,7 +348,7 @@ function endgame(){     //called when max goals are reached
     score.right=0;
     if (window.event.key=="Enter")
         game();
-    if (window.event.key=="Escape") {
+    if (window.event.key=="Backspace") {
         window.location.assign("https://shaq-uille-oatmeal.github.io/AirHockey/");
     }
     
