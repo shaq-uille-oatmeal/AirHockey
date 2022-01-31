@@ -10,7 +10,9 @@ var mouse={                 //Mouse object defined here
     y:window.innerHeight/2
 }
 
-var max_score=3;
+var max_score=localStorage.goals;
+var no_of_pucks=Number(localStorage.pucks);
+
 
 class vector{
     constructor(x,y){
@@ -86,19 +88,34 @@ class sphere{
         
     }
     
-    update_paddle_computer(puck){
+    update_paddle_computer(pucks){
 
         var v=5;
         this.vx=0;
+        
 
-        if(puck.pos.x<=canvas_dim.x/2){                                     //CONDITION to FOLLOW PUCK ONLY ALONG Y
+        var min_distance=window.innerWidth;
+        var closest_puck;
+        for (var i=0;i<no_of_pucks;i++){
+            var current_puck=pucks[i];
+            var sep_x=current_puck.pos.x-this.pos.x;
+            var sep_y=current_puck.pos.y-this.pos.y;
+            var distance=Math.sqrt(sep_x*sep_x+sep_y*sep_y);
+
+            if (distance<min_distance){
+               closest_puck=current_puck;
+               min_distance=distance;
+            }
+        }
+
+        if(closest_puck.pos.x<=canvas_dim.x/2){                                     //CONDITION to FOLLOW PUCK ONLY ALONG Y
             if(this.pos.x>=0.80*canvas_dim.x){
 
-                if(puck.pos.y-this.pos.y>=0){
+                if(closest_puck.pos.y-this.pos.y>=0){
                     this.vy=v;
 
                 }
-                else if(puck.pos.y-this.pos.y<=0){
+                else if(closest_puck.pos.y-this.pos.y<=0){
                     this.vy=-v;
                 }
             }
@@ -108,7 +125,7 @@ class sphere{
         }
         
         else{
-            var theta= Math.atan2(puck.pos.y-this.pos.y, puck.pos.x-this.pos.x);
+            var theta= Math.atan2(closest_puck.pos.y-this.pos.y, closest_puck.pos.x-this.pos.x);
             this.vx=v*Math.cos(theta);
             this.vy=v*Math.sin(theta); 
 
@@ -163,9 +180,9 @@ function collision(paddle,puck){
 }
 
 function check_goal(puck,goal){
-if(puck.pos.y>=goal.corner_pos.y && puck.pos.y<=goal.corner_pos.y+goal.b && Math.abs(puck.pos.x-(goal.corner_pos.x+goal.l/2))<=puck.radius){
-    return true;
-}
+    if(puck.pos.y>=goal.corner_pos.y && puck.pos.y<=goal.corner_pos.y+goal.b && Math.abs(puck.pos.x-(goal.corner_pos.x+goal.l/2))<=puck.radius){
+        return true;
+    }
 }
 
 
@@ -177,8 +194,10 @@ var background=canvas.style.backgroundImage ;
 
 var canvas_dim = new vector(canvas.width,canvas.height);
 
-var puck,paddle1,paddle2,left_goal,right_goal;
+var paddle1,paddle2,left_goal,right_goal,pucks;
 
+var your_color=localStorage.your_color;
+var computer_color=localStorage.computer_color;
 
 
 function game(){
@@ -189,18 +208,27 @@ animate();
 }
 
 
-function initialise(){                              //initialise all the game objects
+function initialise(){   
+    pucks=[];                        //initialise all the game objects
+    for (var i=0; i<no_of_pucks;i++){
+        pucks.push(new sphere(canvas_dim.rescale(0.5,(i+1)/(no_of_pucks+1)),canvas_dim.y/36,"black"));
+       
+        var rand_theta = Math.random()*2*Math.PI;
+        pucks[i].vx=pucks[i].v*Math.cos(rand_theta);
+        pucks[i].vy=pucks[i].v*Math.sin(rand_theta);
+        pucks[i].create();
+    }
 
-    puck =new sphere(canvas_dim.rescale(0.5,0.5),canvas_dim.y/36,"black");
-    var rand_theta = Math.random()*2*Math.PI;
+    /*var rand_theta = Math.random()*2*Math.PI;
     puck.vx=puck.v*Math.cos(rand_theta);
-    puck.vy=puck.v*Math.sin(rand_theta);
-    paddle1 = new sphere(canvas_dim.rescale(0.25,0.5),canvas_dim.y/18,"red");
-    paddle2 = new sphere(canvas_dim.rescale(0.80,0.5),canvas_dim.y/18,"blue");
+    puck.vy=puck.v*Math.sin(rand_theta);*/
+    
+    paddle1 = new sphere(canvas_dim.rescale(0.25,0.5),canvas_dim.y/18,your_color);
+    paddle2 = new sphere(canvas_dim.rescale(0.80,0.5),canvas_dim.y/18,computer_color);
     left_goal = new rectangle(new vector(0,canvas_dim.y/3),canvas_dim.y/36,canvas_dim.y/3,"black");
     right_goal = new rectangle(new vector(canvas_dim.x-canvas_dim.y/36,canvas_dim.y/3),canvas_dim.y/36,canvas_dim.y/3,"black");
    
-    puck.create();
+    //puck.create();
     paddle1.create();
     paddle2.create();
     left_goal.create();
@@ -210,9 +238,19 @@ function initialise(){                              //initialise all the game ob
 
 
 function animate(){     //animation loop
-
-   
-    if (!(check_goal(puck,left_goal) || check_goal(puck,right_goal)))   //when goal isn't scored
+    var goalScored_left=false;
+    var goalScored_right=false;
+    for (var i=0;i<no_of_pucks;i++){
+        if (check_goal(pucks[i],left_goal)){
+            goalScored_left=true;
+            
+            
+        }
+        if (check_goal(pucks[i],right_goal)){
+            goalScored_right=true;
+        }
+    }
+    if (!(goalScored_left || goalScored_right))   //when goal isn't scored
 
     {   
         window.removeEventListener("keydown",continue_game);
@@ -227,20 +265,23 @@ function animate(){     //animation loop
         left_goal.create();
         right_goal.create();
         
-        collision(paddle1,puck);
-        collision(paddle2,puck);
-        puck.update();
-        check_goal(puck,left_goal);
-        check_goal(puck,right_goal);
+        for (var i=0;i<no_of_pucks;i++){
+            collision(paddle1,pucks[i]);
+            collision(paddle2,pucks[i]);
+            pucks[i].update();
+        }
+        //check_goal(puck,left_goal);
+        //check_goal(puck,right_goal);
         
             
         paddle1.update_paddle_1();
-        paddle2.update_paddle_computer(puck);
+        
+        paddle2.update_paddle_computer(pucks);
     }  
 
-    else{                                                   //when goal is scored
-        if(check_goal(puck,left_goal)) score.right+=1;
-        else if(check_goal(puck,right_goal)) score.left+=1;
+    else{                                           //when goal is scored
+        if(goalScored_left) score.right+=1;
+        else if(goalScored_right) score.left+=1;
         if (background=='url("space.jpg")'){
             ct.fillStyle="white";
             ct.shadowColor="#ec38ce"
@@ -257,7 +298,7 @@ function animate(){     //animation loop
         ct.shadowOffsetY=2;
 
         if (score.left<max_score && score.right<max_score){     //continue
-            
+            console.log('if');
             ct.fillText("Press Enter to continue",canvas_dim.x/2,canvas_dim.y*0.6);
             ct.fillText(score.left+" : "+score.right,canvas_dim.x/2-15,canvas_dim.y*0.5);
             ct.fillText("User : Computer",canvas_dim.x/2+30,canvas_dim.y*0.4);
@@ -266,7 +307,8 @@ function animate(){     //animation loop
             ct.shadowOffsetX=0;
             ct.shadowOffsetY=0;
         }
-        else{                                       //game over
+        else{  
+            console.log('else');                                  //game over
             if (score.left==max_score){
                 ct.fillText("User : Computer",canvas_dim.x/2+30,canvas_dim.y*0.3);
                 ct.fillText(score.left+" : "+score.right,canvas_dim.x/2-15,canvas_dim.y*0.4);

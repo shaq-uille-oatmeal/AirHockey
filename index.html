@@ -155,7 +155,92 @@
             background-color:rgb(235, 110, 197); 
             transform: scale(1.1,1.1);
         }
-       
+        
+        #goals{
+            position :absolute;
+            top : 0%;
+            left: 150%; 
+        }
+        #number_of_goals{
+            position:absolute;
+            text-align: center;
+            border:2px solid maroon;
+            padding:10%;
+            border-radius: 10px;
+            font-size: 100%;
+            width: 150%;
+            left:-25%;
+            font-weight: bolder;
+            background-color: rgb(245, 82, 196);
+            -webkit-text-fill-color: maroon;
+            filter: drop-shadow(10px 10px 10px rgb(20, 4, 4));
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #number_of_goals:hover{
+            background-color:rgb(235, 110, 197); 
+            transform: scale(1.1,1.1);
+        }
+        #pucks{
+            position :absolute;
+            top : 0%;
+            left: 250%; 
+        }
+        #number_of_pucks{
+            position:absolute;
+            text-align: center;
+            border:2px solid maroon;
+            padding:10%;
+            border-radius: 10px;
+            font-size: 100%;
+            width: 150%;
+            left:-25%;
+            font-weight: bolder;
+            background-color: rgb(245, 82, 196);
+            -webkit-text-fill-color: maroon;
+            filter: drop-shadow(10px 10px 10px rgb(20, 4, 4));
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        #number_of_pucks:hover{
+            background-color:rgb(235, 110, 197); 
+            transform: scale(1.1,1.1);
+        }
+        #color{
+            position: absolute;
+            top: 50%;
+            left:200%;
+            width:100%;
+        }
+        #color_selection{
+            position: absolute;
+            top: 150%;
+            left:-40%;
+            width:fit-content;
+        }
+        #your-label{
+            position:absolute;
+            top: 100%;
+            left:50%;
+        }
+        #computer-label{
+            position:absolute;
+            top:100%;
+            left:225%;
+        }
+        #your_color{
+            position: relative;
+            top:150%;
+            left: 50%;
+
+        }
+        #computer_color{
+            position:relative;
+            left: 200%;
+            top:150%;
+        }
+        
+
         
     </style>
     
@@ -250,9 +335,57 @@
                 document.getElementById("preview").src=strUser+".jpg";
                 
             </script>
-        
+        <div id="goals">
+            <h3>Goals</h3>
+            <div id="goals_number">
+                <input type="number"  min="1" id="number_of_goals" onchange="g_no()">
+                <script>
+                    document.getElementById("number_of_goals").defaultValue=3;
+                    localStorage.goals=document.getElementById("number_of_goals").value;
+                    function g_no(){
+                        localStorage.goals=document.getElementById("number_of_goals").value;
+                    
+                    }
+                </script>
+
+            </div>
+        </div>
+
+        <div id="pucks">
+            <h3>Pucks</h3>
+            <div id="pucks_number">
+                <input type="number"  min="1" id="number_of_pucks" onchange="p_no()">
+                <script>
+                    document.getElementById("number_of_pucks").defaultValue=1;
+                    localStorage.pucks=document.getElementById("number_of_pucks").value;
+                    function p_no(){
+                        localStorage.pucks=document.getElementById("number_of_pucks").value;
+                    }
+                </script>
+            </div>
+        </div>
+
+        <div id="color">
+            <h3>Color</h3>
+            <div id="color_selection">
+                <h4 id="your-label">You</h4>
+                <h4 id="computer-label">Opponent</h4>
+                <input type="color" id="your_color" value="#ff0000" onchange="color_change()" >
+                
+                <input type="color" id="computer_color" value="#0000ff" onchange="color_change()">
+                <script>
+                    localStorage.your_color=document.getElementById("your_color").value;
+                    localStorage.computer_color=document.getElementById("computer_color").value;
+                    function color_change(){
+                        localStorage.your_color=document.getElementById("your_color").value;
+                        localStorage.computer_color=document.getElementById("computer_color").value;
+                    }
+                </script>
+            </div>
+        </div>
 
     </div>
+
     <div class="content" id="Aboutus_content">
         <h2>About the game</h2>
         <p>
