@@ -298,7 +298,7 @@ function animate(){     //animation loop
         ct.shadowOffsetY=2;
 
         if (score.left<max_score && score.right<max_score){     //continue
-            console.log('if');
+           
             ct.fillText("Press Enter to continue",canvas_dim.x/2,canvas_dim.y*0.6);
             ct.fillText(score.left+" : "+score.right,canvas_dim.x/2-15,canvas_dim.y*0.5);
             ct.fillText("User : Computer",canvas_dim.x/2+30,canvas_dim.y*0.4);
@@ -308,7 +308,7 @@ function animate(){     //animation loop
             ct.shadowOffsetY=0;
         }
         else{  
-            console.log('else');                                  //game over
+                                            //game over
             if (score.left==max_score){
                 ct.fillText("User : Computer",canvas_dim.x/2+30,canvas_dim.y*0.3);
                 ct.fillText(score.left+" : "+score.right,canvas_dim.x/2-15,canvas_dim.y*0.4);
