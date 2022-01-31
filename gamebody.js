@@ -241,7 +241,7 @@ function animate(){     //animation loop
     else{                                                   //when goal is scored
         if(check_goal(puck,left_goal)) score.right+=1;
         else if(check_goal(puck,right_goal)) score.left+=1;
-        if (background=="space.jpg"){
+        if (background=='url("space.jpg")'){
             ct.fillStyle="white";
             ct.shadowColor="#ec38ce"
         }
