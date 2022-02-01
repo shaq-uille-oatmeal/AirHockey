@@ -102,13 +102,13 @@ class sphere{
             var sep_y=current_puck.pos.y-this.pos.y;
             var distance=Math.sqrt(sep_x*sep_x+sep_y*sep_y);
 
-            if (distance<min_distance){
+            if (distance<min_distance){                             //LOGIC BEGINS
                closest_puck=current_puck;
                min_distance=distance;
             }
         }
 
-        if(closest_puck.pos.x<=canvas_dim.x/2){                                     //CONDITION to FOLLOW PUCK ONLY ALONG Y
+        if(closest_puck.pos.x<=canvas_dim.x*0.6){                                     //CONDITION to FOLLOW PUCK ONLY ALONG Y (if puck in player half)
             if(this.pos.x>=0.80*canvas_dim.x){
 
                 if(closest_puck.pos.y-this.pos.y>=0){
@@ -128,9 +128,27 @@ class sphere{
             var theta= Math.atan2(closest_puck.pos.y-this.pos.y, closest_puck.pos.x-this.pos.x);
             this.vx=v*Math.cos(theta);
             this.vy=v*Math.sin(theta); 
-
+            if (closest_puck.vx<0 && closest_puck.pos.x>0.75*canvas_dim.x){             //if vx away from goal and puck >0.75*window width then runs away
+                this.vx=-this.vx;  
+                this.vy=-this.vy;
+            }                                                               //LOGIC ENDS
         }
-
+        if (this.pos.x>=(canvas_dim.x-this.radius) ){                       //BOUNDARY CONDITIONS
+            this.vx=-v;     
+            this.vy=0;
+        }
+        if  (this.pos.x<=(canvas_dim.x/2+this.radius)){
+            this.vx=v;
+            this.vy=0;
+        }
+        if (this.pos.y<=this.radius){
+            this.vy=v;
+            this.vx=0;
+        }
+        if (this.pos.y>=(canvas_dim.y-this.radius)){
+            this.vy=-v;
+            this.vx=0;
+        }
         this.pos=this.pos.add(this.vx,this.vy);
 
         this.create();
