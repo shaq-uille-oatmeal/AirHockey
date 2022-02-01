@@ -13,7 +13,7 @@ College: IIT Bombay
 Year: Freshman   
 Email ID: sohamjoshitab2@gmail.com       
 
-Name: Shubhranil Chatterjee
+Name: Shubhranil Chatterjee                
 Branch: Mechanical Engineering
 Roll number: 210100144
 College: IIT Bombay
